@@ -42,4 +42,10 @@ UTILIZAR O OBJETO REPOSITORY NO Controller
 		private UsuarioRepository UsuarioRepository;
 	...
 	
-	
+
+CRIANDO UMA API
+ - DEVE SER PÚBLICA OU NÃO E RETORNAR UM JSON
+
+ - Criar uma API para retornar os registros de uma tabela. O método java deve ter a notação: @GetMapping(value = "listatodos")
+ 
+ 

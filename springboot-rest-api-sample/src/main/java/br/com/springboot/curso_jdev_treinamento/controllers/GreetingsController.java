@@ -70,7 +70,6 @@ public class GreetingsController {
     	Usuario user = usuarioRepository.save(usuario);
     	return new ResponseEntity<Usuario>(user, HttpStatus.CREATED);
     }
-
    
     
     /* No postman - DELETE, BODY, x-www-form-urlencoded */
@@ -89,4 +88,14 @@ public class GreetingsController {
     	return new ResponseEntity<Usuario>(usuario, HttpStatus.OK);
     }
 
+    /* No postman - PUT, BODY, raw, jason */
+    @PutMapping(value = "atualizar") /* Intercepta o método PUT, mapeamento da url*/
+    @ResponseBody  /* retorna - descrição da resposta*/
+    public ResponseEntity<?> atualizar (@RequestBody Usuario usuario){ /* Recebe os dados (json) para salvar */
+    	if (usuario.getId() == null || usuario.getId() <= 0) {
+    		return new ResponseEntity<String>("Id não foi informado para a atualização.", HttpStatus.OK);
+    	}
+    	Usuario user = usuarioRepository.saveAndFlush(usuario);
+    	return new ResponseEntity<Usuario>(user, HttpStatus.OK);
+    }    
 }

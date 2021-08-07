@@ -5,10 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,4 +60,19 @@ public class GreetingsController {
     	List<Usuario> usuarios = usuarioRepository.findAll(); /* spring data executa a consulta no bd*/
     	return new ResponseEntity<List<Usuario>>(usuarios, HttpStatus.OK); /* retorna no formato json*/
     }
+    
+    @PostMapping(value = "salvar") /* Intercepta o método POST, mapeamento da url*/
+    @ResponseBody  /* retorna - descrição da resposta*/
+    public ResponseEntity<Usuario> salvar (@RequestBody Usuario usuario){ /* Recebe os dados (json) para salvar */
+    	Usuario user = usuarioRepository.save(usuario);
+    	return new ResponseEntity<Usuario>(user, HttpStatus.CREATED);
+    }
+    
+    @DeleteMapping(value = "delete") /* mapeamento da url*/
+    @ResponseBody  /* retorna - descrição da resposta*/
+    public ResponseEntity<String> delete (@RequestParam Long idUser){ /* Recebe os dados para deletar */
+    	usuarioRepository.deleteById(idUser);
+    	return new ResponseEntity<String>("Usuário deletado com sucesso!", HttpStatus.OK);
+    }
+    
 }

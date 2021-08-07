@@ -1,0 +1,45 @@
+Maven Project
+Catalog: Maven Central
+Filter: springboot-rest-api
+
+Group id: br.com.springboot
+Artifact id: curso-jdev-treinamento
+
+Localizar as dependências do postgreSql
+- maven postgresql
+- https://mvnrepository.com/artifact/org.postgresql/postgresql/9.4.1212
+- versão: 9.4.1212
+
+Criar o banco de dados: nome e usuário
+
+Definir a conexão com banco de dados no arquivo main/sources/application.properties
+
+Criar a entidade que será uma tabela do banco de dados
+- criar um pacote model seguindo o padrão de nomes
+- criar uma classe , utilizar uma notação @Entity (import javax.persistence.Entity) do JPA
+- implementar Serializable  (padrão para controle do java) java.io.Serializable
+- especificar a notação @Id no campo id (javax.persistence)
+- definir um  gerador de sequencial para a entidade logo abaixo da notação @Entity @SequenceGenerator
+  @SequenceGenerator(name = "seq_usuario", sequenceName = "seq_usuario", allocationSize = 1, initialValue = 1)
+  
+- definir o gerador no campo Id, logo abaixo da notação @Id, @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_usuario")
+  
+CRIAR A INTERFACE REPOSITORY
+- Criar um pacote repository seguindo o padrão de nomes
+- Criar a interface da entidade ex.: UsuarioRepository.java
+- Adicionar a notação @Repository de org.springframework.stereotype.Repository
+- estender da classe  JpaRepository<ClasseModel, TipoDoId>   de org.springframework.data.jpa.repository.JpaRepository
+  obtém varios métodos úteis.
+  é utilizado na classe Controller que é criada automaticamente
+
+UTILIZAR O OBJETO REPOSITORY NO Controller
+- criar o objeto adicionando a notação @Autowired (injeção de dependência)
+
+	@RestController
+	public class GreetingsController {
+		@Autowired /* IC/CD ou CDI - Injeção de dependência */
+		private UsuarioRepository UsuarioRepository;
+	...
+	
+	

@@ -98,4 +98,13 @@ public class GreetingsController {
     	Usuario user = usuarioRepository.saveAndFlush(usuario);
     	return new ResponseEntity<Usuario>(user, HttpStatus.OK);
     }    
+    
+    /* No postman - GET, BODY, form-data */
+    @GetMapping(value = "buscarPorNome") /* mapeamento da url*/
+    @ResponseBody  /* retorna - descrição da resposta*/
+    public ResponseEntity<List<Usuario>> buscarPorNome (@RequestParam(name = "nome") String nome){ /* Recebe os dados para consultar*/
+    	 List<Usuario> usuarios = usuarioRepository.buscarPorNome(nome.toUpperCase().trim());
+    	return new ResponseEntity<List<Usuario>>(usuarios, HttpStatus.OK);
+    }
+    
 }

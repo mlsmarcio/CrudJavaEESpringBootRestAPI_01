@@ -48,4 +48,13 @@ CRIANDO UMA API
 
  - Criar uma API para retornar os registros de uma tabela. O método java deve ter a notação: @GetMapping(value = "listatodos")
  
+
+INSTALAR O MAVEN PARA GERAR O JAR DE IMPLANTAÇÃO NO SERVIDOR
+	https://maven.apache.org/download.cgi
+ - Descompactar na unidade C:
+ C:\apache-maven-3.8.1
+ - Criar a variável de ambiente  MAVEN_HOME com valor = C:\apache-maven-3.8.1\bin
+ - Editar a variável Path adicionando: %MAVEN_HOME%\bin
+ - Verificar a versão do maven: mvn -v
+ 
  

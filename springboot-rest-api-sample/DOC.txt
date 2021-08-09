@@ -57,4 +57,31 @@ INSTALAR O MAVEN PARA GERAR O JAR DE IMPLANTAÇÃO NO SERVIDOR
  - Editar a variável Path adicionando: %MAVEN_HOME%\bin
  - Verificar a versão do maven: mvn -v
  
- 
+GERANDO O JAR DO SPRING BOOT COM MAVEN
+- Obter o Path completo do projeto na opção property do projeto
+	C:\Users\adm\git\JavaEeSpringbootRestApi_01\.git\springboot-rest-api-sample
+	
+- No prompt de comando acessar o diretório do projeto 	e colocar o comando: mvn clean package
+	C:\Users\adm\git\JavaEeSpringbootRestApi_01\.git\springboot-rest-api-sample>mvn clean package
+
+- Verificar se ocorrerá erros. Se apresentar erros devido a classe de testes, então, é possível desabilitar os testes:
+  - No pom.xml adicionar nas properties: <maven.test.skip>true</maven.test.skip>
+
+- Executar o comando novamente:  
+	C:\Users\adm\git\JavaEeSpringbootRestApi_01\.git\springboot-rest-api-sample>mvn clean package
+	
+- Colocar o Java para exibir o log, utilizar o programa Configure Java, na aba Avançado, selecionar Show Console
+
+- Acessar a pasta target e digitar o comando: java -jar <nome do jar>
+  Ex.: c:\...\.git\springboot-rest-api-sample\target>java -jar springboot-rest-api-sample-1.0.0-SNAPSHOT.jar
+  Dessa forma a API fica em execução, disponível para receber parâmetros.  
+
+- ctrl + c  (duas vezes apra finalizar o servidor  
+
+- CRIANDO AS PÁGINAS WEB NO SPRING BOOT
+  - criar a pasta static da seguinte forma, dentro do pacote:
+    src/main/sources/static
+
+    
+
+  

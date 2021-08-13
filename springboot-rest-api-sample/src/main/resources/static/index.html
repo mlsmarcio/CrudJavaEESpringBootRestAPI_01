@@ -11,66 +11,75 @@
 	integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
 	crossorigin="anonymous">
 
+<style type="text/css">
+	
+</style>
 </head>
 <body lang="en">
+	<div class="container">
+		<h3>Spring Boot REST API CRUD Completo</h3>
 
-	<h3>Spring Boot REST API CRUD Completo</h3>
+		<form id="formUser" action="">
+			<div class="mb-3">
+				<label for="id" class="form-label">ID</label> <input type="text"
+					class="form-control" id="id" readonly>
+			</div>
 
-	<form id="formUser" action="">
-		<div class="mb-3">
-			<label for="id" class="form-label">ID</label> <input type="text"
-				class="form-control" id="id" readonly>
-		</div>
+			<div class="mb-3">
+				<label for="nome" class="form-label">NOME</label> <input type="text"
+					class="form-control" id="nome" placeholder="informe o nome"
+					required>
+			</div>
 
-		<div class="mb-3">
-			<label for="nome" class="form-label">NOME</label> <input type="text"
-				class="form-control" id="nome" placeholder="informe o nome" required>
-		</div>
+			<div class="mb-3">
+				<label for="idade" class="form-label">IDADE</label> <input
+					type="number" class="form-control" id="idade"
+					placeholder="informe a idade required">
+			</div>
+			<button type="button" class="btn btn-primary"
+				onclick="salvarUsuario()">Salvar</button>
+			<button type="button" class="btn btn-secondary"
+				onclick="limparForm()">Novo</button>
+			<button type="button" class="btn btn-danger" data-bs-toggle="modal"
+				data-bs-target="#ModalPesquisaUser">Pesquisar</button>
+			<button type="button" class="btn btn-warning"
+				onclick="deletarUsuario()">Deletar</button>
+		</form>
+	</div>
 
-		<div class="mb-3">
-			<label for="idade" class="form-label">IDADE</label> <input
-				type="number" class="form-control" id="idade"
-				placeholder="informe a idade required">
-		</div>
-		<button type="button" class="btn btn-primary"
-			onclick="salvarUsuario()">Salvar</button>
-		<button type="button" class="btn btn-secondary" onclick="limparForm()">Novo</button>
-		<button type="button" class="btn btn-danger" data-bs-toggle="modal"
-			data-bs-target="#ModalPesquisaUser">Pesquisar</button>
-	</form>
 
-	<div class="modal fade" id="ModalPesquisaUser" tabindex="-1"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="ModalPesquisaUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Pesquisa de
-						Usuário</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
+					<h5 class="modal-title" id="exampleModalLabel">Pesquisa de Usuário</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"	aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<form>
 						<div class="mb-3">
-							<label for="nomeBusca" class="col-form-label">Informe o
-								nome:</label> <input type="text" class="form-control" id="nomeBusca">
+							<label for="nomeBusca" class="col-form-label">Informe o	nome:</label> 
+							<input type="text" class="form-control" id="nomeBusca">
+							<button type="button" class="btn btn-success" onclick="pesquisaUser()">Buscar</button>
 						</div>
-						<button type="button" class="btn btn-success" onclick="pesquisaUser()">Buscar</button>
+						
 					</form>
-
-					<table id="tabelaResultado"
-						class="table table-success table-striped table-hover">
-						<thead>
-							<tr>
-								<th scope="col">Id</th>
-								<th scope="col">Nome</th>
-								<th scope="col">Idade</th>
-							</tr>
-						</thead>
-						<tbody>
-
-						</tbody>
-					</table>
+					<div style="height: 300px; overflow: scroll;">
+						<table id="tabelaResultado"
+							class="table table-success table-striped table-hover">
+							<thead>
+								<tr>
+									<th scope="col">Id</th>
+									<th scope="col">Nome</th>
+									<th scope="col">Idade</th>
+									<th scope="col">Editar</th>
+									<th scope="col">Deletar</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
@@ -102,31 +111,84 @@
     -->
 
 	<script>
-		function pesquisaUser(){
-			let nomeBusca = $("#nomeBusca").val();
+
+		function limparForm() {
+			$("#id").val("");
+			$("#nome").val("");
+			$("#idade").val("");
+			$("#nome").focus();
+		}
+
+		function deletarUsuario() {
+			id = $('#id').val();
+			if (id != null && id > 0) {
+				deleteUsuario(id);
+				limparForm();
+			}else{
+				alert('Selecione um usuário!');
+			}
+
+		}
+
+		function deleteUsuario(id) {
+			if (!confirm("Deseja deletar?")) {
+				return;
+			}
 			$.ajax({
-				method : "GET",
-				url : "buscarPorNome",
-				data : "nome=" + nomeBusca,
-				contentType : "application/json; charset=utf-8",
+				method : "DELETE",
+				url : "delete",
+				data : "idUser=" + id,
 				success : function(response) {
-					$('#tabelaResultado > tbody > tr').remove();
-					
-					for(let i = 0; i < response.length; i++){
-						$('#tabelaResultado tbody').append('<tr>' +
-								'<td>'+response[i].id+'</td>' +
-								'<td>'+response[i].nome+'</td>' +
-								'<td>'+response[i].idade+'</td>' + 
-								'<td><button type="button" class="btn btn-primary" onclick="editarUsuario('+response[i].id+')">VER</button></td></tr>')
-					}
+					$('#' + id).remove();
+					alert(response);
 				}
 
 			}).fail(function(xhr, status, errorThrown) {
-				alert("Erro ao buscar usuário: " + xhr.responseText);
+				alert("Erro ao deletar usuário por id: " + xhr.responseText);
 			});
+
 		}
 
-		function editarUsuario(id){
+		function pesquisaUser() {
+			let nomeBusca = $("#nomeBusca").val();
+			$
+					.ajax(
+							{
+								method : "GET",
+								url : "buscarPorNome",
+								data : "nome=" + nomeBusca,
+								contentType : "application/json; charset=utf-8",
+								success : function(response) {
+									$('#tabelaResultado > tbody > tr').remove();
+
+									for (let i = 0; i < response.length; i++) {
+										$('#tabelaResultado tbody')
+												.append(
+														'<tr id="'+response[i].id+'">'
+																+ '<td>'
+																+ response[i].id
+																+ '</td>'
+																+ '<td>'
+																+ response[i].nome
+																+ '</td>'
+																+ '<td>'
+																+ response[i].idade
+																+ '</td>'
+																+ '<td><button type="button" class="btn btn-primary" onclick="editarUsuario('
+																+ response[i].id
+																+ ')">VER</button></td>'
+																+ '<td><button type="button" class="btn btn-danger" onclick="deleteUsuario('
+																+ response[i].id
+																+ ')">Delete</button></td></tr>')
+									}
+								}
+
+							}).fail(function(xhr, status, errorThrown) {
+						alert("Erro ao buscar usuário: " + xhr.responseText);
+					});
+		}
+
+		function editarUsuario(id) {
 			$.ajax({
 				method : "GET",
 				url : "buscaruserid",
@@ -136,21 +198,14 @@
 					$("#id").val(response.id);
 					$("#nome").val(response.nome);
 					$("#idade").val(response.idade);
-					$("#nome").focus();	
+					$("#nome").focus();
 					$("#ModalPesquisaUser").modal('hide');
 				}
 
 			}).fail(function(xhr, status, errorThrown) {
 				alert("Erro ao buscar usuário por id: " + xhr.responseText);
 			});
-			
-		}
-		
-		function limparForm() {
-			$("#id").val("");
-			$("#nome").val("");
-			$("#idade").val("");
-			$("#nome").focus();
+
 		}
 
 		function salvarUsuario() {
@@ -158,6 +213,18 @@
 			let id = $("#id").val();
 			let nome = $("#nome").val();
 			let idade = $("#idade").val();
+			
+			if (nome == null || nome != null && nome.trim() == ''){
+				$('#nome').focus();
+				alert('Informe o nome!');
+				return;
+			}
+
+			if (idade == null || idade != null && idade.trim() == ''){
+				$('#idade').focus();
+				alert('Informe a idade!');
+				return;
+			}
 
 			$.ajax({
 				method : "POST",

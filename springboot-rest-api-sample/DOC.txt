@@ -82,6 +82,63 @@ GERANDO O JAR DO SPRING BOOT COM MAVEN
   - criar a pasta static da seguinte forma, dentro do pacote:
     src/main/sources/static
 
-    
+- COLOCANDO O PROJETO PARA TESTE NO HERUKU.COM
+  heroku.com
+  
+  - Necessário baixar o heroku-cli
+    https://devcenter.heroku.com/articles/heroku-cli
+    selecione a opção Download and Install
+  
+    heruku-cli - Envia os dados para o Heroku
 
   
+  - Necessário baixar e instalar o Git
+  - Configurar o git local (CMD)
+    - git config --global user.email "mlsmarciogm@gmail.com"
+    
+    - git config --global user.name "Márcio Lopes"
+  
+  - Login no heroku (cmd)
+    
+    - heroku login
+    - ENTER (ou solicitará login e a senha)
+    - Abrirá o navegador - click em login
+  
+  - Criar a aplicação no heroku (cmd)
+    
+    - heroku create "nome da aplicação"
+    - Será exibida a url aplicação do heroku e também o git
+  
+  - Configurando o banco de dados
+  
+    - heroku addons:create heroku-postgresql:hobby-dev --app <nome da aplicação>
+    - Criará o banco free do postgree, será exibida a variável que será necessário configurar em nosso projeto, ex.: ${DATABASE-URL}, o heroku injetará
+      nessa variável a conexão.
+    - Em nosso projeto, no application.properties:
+      - comente a linha que especifica a url de conexão, ficará assim: spring.datasource.url= ${DATABASE-URL}
+      
+      - comente também as linhas:
+      #spring.datasource.username=postgres
+      #spring.datasource.password=admin
+      #server.address=0.0.0.0
+      #server.port=8000
+
+  - Enviando nosso projeto para o heroku
+    - no eclipse, em propriedades do projeto, obter o path 
+    - no cmd entrar na pasta do projeto: cd...
+    - git init
+    - git add .   (envia o projeto)
+    - git add .   (outra vez)
+    - git comit -m "comit da aplicação" 
+    - heroku git:remote -a <nome da aplicação>    	(acionar o repositório do git remoto, setou nosso git remoto)
+    - git push heroku master	 			(enviar o projeto para o git setado)
+      o projeto será processado e será disponibilizado o link para acesso ex.: "https://<nome da aplicação>.herokuapp.com/",
+      para acessar será necessário colocar o nome da aplicação após o link ex.:
+        https://<nome da aplicação>.herokuapp.com/<nome da aplicação>
+        
+    - pode ser acessado pelo navegador ou pelo cmd: heroku open	        
+      
+    
+    
+    
+    - 

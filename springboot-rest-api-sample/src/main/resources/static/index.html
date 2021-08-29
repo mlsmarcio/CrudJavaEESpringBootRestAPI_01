@@ -26,26 +26,19 @@
 
 			<div class="mb-3">
 				<label for="nome" class="form-label">NOME</label> <input type="text"
-					class="form-control" id="nome" placeholder="informe o nome"
-					required>
+					class="form-control" id="nome" placeholder="informe o nome"	required>
 			</div>
 
 			<div class="mb-3">
-				<label for="idade" class="form-label">IDADE</label> <input
-					type="number" class="form-control" id="idade"
-					placeholder="informe a idade required">
+				<label for="idade" class="form-label">IDADE</label>
+				<input type="number" class="form-control" id="idade" placeholder="informe a idade required">
 			</div>
-			<button type="button" class="btn btn-primary"
-				onclick="salvarUsuario()">Salvar</button>
-			<button type="button" class="btn btn-secondary"
-				onclick="limparForm()">Novo</button>
-			<button type="button" class="btn btn-danger" data-bs-toggle="modal"
-				data-bs-target="#ModalPesquisaUser">Pesquisar</button>
-			<button type="button" class="btn btn-warning"
-				onclick="deletarUsuario()">Deletar</button>
+			<button type="button" class="btn btn-primary" onclick="salvarUsuario()">Salvar</button>
+			<button type="button" class="btn btn-primary" onclick="limparForm()">Novo</button>
+			<button type="button" class="btn btn-primary" data-bs-toggle="modal"	data-bs-target="#ModalPesquisaUser">Pesquisar</button>
+			<button type="button" class="btn btn-danger" onclick="deletarUsuario()">Deletar</button>
 		</form>
 	</div>
-
 
 	<div class="modal fade" id="ModalPesquisaUser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
